@@ -48,13 +48,7 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mGetContent.launch("image/*");
-
-            }
-        });
+        imageView.setOnClickListener(view1 -> mGetContent.launch("image/*"));
 
 
     }

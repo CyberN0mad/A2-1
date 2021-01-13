@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Date;
+
+import Models.Note;
+
 
 public class FormFragment extends Fragment {
 
@@ -31,26 +35,24 @@ public class FormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         editText = view.findViewById(R.id.editText);
-        view.findViewById(R.id.btnSave).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                save();
-            }
-        });
+        view.findViewById(R.id.btnSave).setOnClickListener(v -> save());
     }
 
     private void save() {
         String text = editText.getText().toString().trim();
         Bundle bundle = new Bundle();
-        bundle.putString("text", text);
+
+        String date = java.text.DateFormat.getDateTimeInstance().format(new Date());
+        Note note = new Note(text, date);
+
+        bundle.putSerializable("note", note);
         getParentFragmentManager().setFragmentResult("rk_form", bundle);
         close();
-        
-
     }
 
     private void close() {
-        NavController navController = Navigation.findNavController(requireActivity(),R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(requireActivity(),
+                R.id.nav_host_fragment);
         navController.navigateUp();
     }
 }
